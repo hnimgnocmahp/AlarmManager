@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+    <TextView
+        android:id="@+id/filerTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <GridView
+        android:id="@+id/gv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:horizontalSpacing="2dp"
+        android:numColumns="3"
+        android:paddingTop="18dp"
+        android:paddingBottom="68dp"
+        android:verticalSpacing="2dp" />
+
+    <ImageView
+        android:id="@+id/camera"
+        android:layout_width="56dp"
+        android:layout_height="52dp"
+        android:layout_gravity="bottom|center"
+        android:background="@drawable/circle_border"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/camera"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/arrowdown"
+        android:layout_width="40dp"
+        android:layout_height="24dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="48dp"
+        android:src="@drawable/arrowdown"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/arrowup"
+        android:layout_width="40dp"
+        android:layout_height="24dp"
+        android:layout_gravity="bottom|center"
+        android:src="@drawable/arrowup"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btnchon"
+        android:layout_width="120dp"
+        android:layout_height="32dp"
+        android:layout_gravity="bottom|left"
+        android:layout_marginBottom="33dp"
+        android:background="@drawable/custom_button"
+        app:backgroundTint="@null"
+        android:text="Chọn"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/btnhuy"
+        android:layout_width="120dp"
+        android:layout_height="32dp"
+        android:layout_gravity="bottom|left"
+        android:background="@drawable/custom_button"
+        android:text="Hủy"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        android:visibility="gone"
+        app:backgroundTint="@null" />
+
+    <Button
+        android:id="@+id/btnxoa"
+        android:layout_width="120dp"
+        android:layout_height="32dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="33dp"
+        android:background="@drawable/custom_button"
+        android:backgroundTint="@null"
+        android:text="Xóa"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        android:visibility="visible"
+        app:backgroundTint="@null" />
+
+    <Button
+        android:id="@+id/btnxoatc"
+        android:layout_width="120dp"
+        android:layout_height="32dp"
+        android:layout_gravity="bottom|right"
+        android:background="@drawable/custom_button"
+        android:text="Xóa tất cả"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        android:visibility="visible"
+        app:backgroundTint="@null" />
+</FrameLayout>

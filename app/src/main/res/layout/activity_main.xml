@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <!-- Đặt chiều cao của TabLayout là wrap_content -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/myTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabSelectedTextColor="#005042" />
+
+    <!-- ViewPager2 có thể chiếm phần còn lại của màn hình -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/myViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>
