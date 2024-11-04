@@ -4,8 +4,10 @@ package com.example.tabselector;
 import android.animation.ValueAnimator;
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -251,6 +253,7 @@ public class HomeFragment extends Fragment {
                                 // Gọi phương thức xóa tất cả hình ảnh
                                 databaseHelper.deleteAllCapturedImages();
                                 btnhuy.setVisibility(View.GONE);
+                                filerTime.setText(null);
                                 // Cập nhật giao diện hoặc làm mới danh sách sau khi xóa
                                 loadCapturedImagesFromDatabase(); // Tải lại ảnh từ cơ sở dữ liệu
                             }
@@ -286,6 +289,7 @@ public class HomeFragment extends Fragment {
 
             // Tải lại ảnh từ cơ sở dữ liệu và cập nhật GridView
             loadCapturedImagesFromDatabase();
+            savePhotoTakenToday(getActivity());
 
 
         }
@@ -299,6 +303,13 @@ public class HomeFragment extends Fragment {
 
         // Thông báo Adapter rằng dữ liệu đã thay đổi
         imageAdapter.notifyDataSetChanged();
+    }
+
+    public void savePhotoTakenToday(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("DailyPhotoPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("photoTakenToday", true);
+        editor.apply();
     }
 
 }

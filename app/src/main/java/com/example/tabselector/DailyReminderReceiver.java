@@ -1,67 +1,71 @@
 package com.example.tabselector;
 
 
+import static android.app.PendingIntent.getActivity;
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
 public class DailyReminderReceiver extends BroadcastReceiver {
-    private final String CHANNEL_ID = "reminder_channel";
-
-    private final int NOTI_ID = 99;
+    private static final String CHANNEL_ID = "daily_selfie_reminder_channel";
+    private static final int NOTIFICATION_ID = 100;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         createNotificationChannel(context);
 
-        // Tạo Intent để mở ứng dụng khi người dùng nhấn vào thông báo
-        Intent openapp = new Intent(context, MainActivity.class); // Mở MainActivity hoặc Activity khác
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, openapp, PendingIntent.FLAG_IMMUTABLE);
+        // Tạo thông báo
+        SharedPreferences preferences = context.getSharedPreferences("DailyPhotoPrefs", Context.MODE_PRIVATE);
+        boolean photoTakenToday = preferences.getBoolean("photoTakenToday", false);
 
-        // Tạo và cấu hình thông báo
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                //                .setSmallIcon(R.drawable.ic_notification) // Thay bằng icon của bạn
-                .setContentTitle("Nhắc nhở chụp ảnh")
-                .setContentText("Bạn chưa chụp ảnh nào hôm nay, hãy chụp ảnh ngay!")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+        if (!photoTakenToday) {
+            // Gửi thông báo vì ảnh chưa được chụp hôm nay
+            createNotificationChannel(context);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                    .setSmallIcon(android.R.drawable.ic_menu_camera)
+                    .setContentTitle("Nhắc nhở hàng ngày")
+                    .setContentText("Đã đến lúc chụp ảnh selfie!")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setAutoCancel(true);
 
-        // Gửi thông báo
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-
-        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        if (notificationManager != null) {
-            notificationManager.notify(NOTI_ID, builder.build());
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+            if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                notificationManager.notify(NOTIFICATION_ID, builder.build());
+            }
         }
 
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("photoTakenToday", false);
+        editor.apply();
     }
 
-    private void createNotificationChannel(Context context){
+    private void createNotificationChannel(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Nhắc nhở chụp ảnh hàng ngày";
-            String desc = "Kênh nhắc nhở chụp ảnh hàng ngày";
-            NotificationChannel channel = new NotificationChannel(
-                    CHANNEL_ID,
-                    name,
-                    NotificationManager.IMPORTANCE_HIGH
-            );
-            channel.setDescription(desc);
+            CharSequence name = "Daily Reminder";
+            String description = "Channel for daily selfie reminder";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
     }
+
+
 
 }
