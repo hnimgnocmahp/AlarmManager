@@ -35,6 +35,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
+    /*Đồ án đầy đủ tính năng như thầy giao:
+    Giao diện được chia làm 2 phần: Trang chủ và Cài đặt
+    Trang chủ
+        Cho phép chụp nhiều ảnh mỗi ngày.
+        Luu trữ ảnh, xem chi tiết ảnh, xóa đơn, xóa nhiều, xóa tất cả.
+        Hiển thị ngày của các ảnh (trong khung gridview) nằm phía trên gridview.
+        Thanh menu có thể ẩn và hiện lại
+    Cài đặt
+        Hẹn giờ thông báo chụp ảnh. Nếu đã chụp không thông báo
+     */
     private TabLayout myTab;
     private ViewPager2 myViewPager;
 
